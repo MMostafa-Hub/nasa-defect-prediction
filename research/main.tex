@@ -380,6 +380,144 @@ should not only be assessed on overall accuracy but also on its ability to
 identify each class accurately, especially when dealing with imbalanced
 datasets.
 
+\chapter*{Proposed Enhancement to Defect prediction Model}
+
+\section*{The Problem with Imbalanced Data Sets}
+Class imbalance is a common problem in machine learning classification where there are a disproportionate ratio of observations in each class. Class imbalance can be found in many different areas including medical diagnosis, spam filtering, and fraud detection. The main issue with class imbalance is that most machine learning algorithms work best when the number of samples in each class are about equal. This is because most algorithms are designed to maximize accuracy and reduce error.
+
+\section*{Synthetic Minority Over-sampling Technique (SMOTE)}
+
+Synthetic Minority Over-sampling Technique, or SMOTE, is a popular algorithm to
+create synthetic observations of the minority class. It was presented
+by\cite{chawla2002smote}.\\
+
+\newpage
+SMOTE works by selecting examples that are close in the feature space, drawing a line between the examples in the feature space and drawing a new sample at a point along that line. Specifically, a random example from the minority class is first chosen. Then k of the nearest neighbors for that example are found (typically k=5). A randomly selected neighbor is chosen and a synthetic example is created at a randomly selected point between the two examples in feature space.
+
+\begin{figure}[hbt!]
+      \centering
+      \includegraphics[width=0.9\textwidth]{./figures/smote.png}
+      \caption{Schematic of the SMOTE algorithm.}
+      \label{fig:SMOTE}
+\end{figure}
+
+The algorithm can be summarized as follows:
+\begin{itemize}
+      \item For each sample in the minority class, calculate the k nearest neighbors.
+      \item From the k neighbors, a neighbor is randomly selected.
+      \item A synthetic sample is created by choosing a point between the two instances in
+            feature space.
+\end{itemize}
+
+This process is repeated until the data is balanced.
+
+\subsection*{Efficacy and Limitations of SMOTE}
+
+According to\cite{fernandez2018smote}, the main advantage of SMOTE is that it
+can improve the performance of the minority class by generating the synthetic
+examples that are quite similar to the existing observations in the minority
+class. However, one potential drawback of SMOTE is that it can increase the
+likelihood of overfitting since it generates synthetic examples without
+considering the majority class. New synthetic examples could be generated that
+are quite similar, or even identical, to existing examples. Furthermore,
+synthetic examples are generated without considering the majority class,
+possibly resulting in ambiguous examples if there is a strong overlap for the
+classes.
+
+\subsection*{Implementation}
+We utilized the SMOTE algorithm implemented in the imbalanced-learn library in
+python, and setting number of neighbors to 5 which is the default and it's
+sufficient for most cases.
+
+\begin{figure}[ht]
+      \centering
+      \includegraphics[width=\textwidth]{./figures/Imbalanced_vs_balanced.png}
+      \caption{Data distribution before and after using SMOTE}
+      \label{fig:smote_plot}
+\end{figure}
+
+\subsection*{Results}
+After Training SVM, Random Forest, Logistic Regression, and Ensemble models on
+the balanced dataset and evaluated their performance. The results showed a
+significant improvement in the performance of all models in precision, recall
+and consequently the f1-score. The best performance was observed with the
+Random Forest model.
+
+% Accuracy
+\begin{table}[hbt!]
+      \centering
+      \caption{Accuracies for each model on all datasets after using SMOTE}
+      \label{tab:model-performance2}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model                       & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM (SMOTE)                 & 0.8 & 0.7 & 0.7 & 0.7 & 0.7 & 0.8 & 0.6 & 0.7 & 0.8 & 0.8 & 0.8 & 0.8 & 0.7 \\
+                  Random Forest (SMOTE)       & 0.8 & 0.8 & 0.7 & 0.8 & 0.8 & 1.0 & 0.8 & 0.9 & 0.9 & 1.0 & 0.8 & 0.9 & 0.8 \\
+                  Logistic Regression (SMOTE) & 0.8 & 0.7 & 0.6 & 0.7 & 0.7 & 0.8 & 0.6 & 0.7 & 0.8 & 0.8 & 0.8 & 0.8 & 0.7 \\
+                  Voting Classifier (SMOTE)   & 0.8 & 0.7 & 0.7 & 0.7 & 0.7 & 0.8 & 0.6 & 0.8 & 0.8 & 0.9 & 0.8 & 0.8 & 0.7 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+
+% Table for recall
+\begin{table}[hbt!]
+      \centering
+      \caption{Recall for each model on all datasets after using SMOTE}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model                       & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM (SMOTE)                 & 0.6 & 0.4 & 0.5 & 0.2 & 0.6 & 0.6 & 0.7 & 0.6 & 0.8 & 0.2 & 0.7 & 0.9 & 0.7 \\
+                  Random Forest (SMOTE)       & 0.2 & 0.3 & 0.4 & 0.1 & 0.8 & 0.1 & 0.7 & 0.4 & 0.3 & 0.0 & 0.3 & 0.7 & 0.6 \\
+                  Logistic Regression (SMOTE) & 0.5 & 0.5 & 0.6 & 0.2 & 0.6 & 0.4 & 0.7 & 0.6 & 0.8 & 0.2 & 0.7 & 0.9 & 0.7 \\
+                  Voting Classifier (SMOTE)   & 0.5 & 0.5 & 0.5 & 0.2 & 0.6 & 0.5 & 0.7 & 0.6 & 0.8 & 0.2 & 0.7 & 0.9 & 0.7 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+
+% Table for precision
+\begin{table}[hbt!]
+      \centering
+      \caption{Precision for each model on all datasets after using SMOTE}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model                       & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM (SMOTE)                 & 0.4 & 0.4 & 0.4 & 0.1 & 0.7 & 0.1 & 0.6 & 0.3 & 0.2 & 0.0 & 0.2 & 0.5 & 0.5 \\
+                  Random Forest (SMOTE)       & 0.4 & 0.4 & 0.5 & 0.1 & 0.8 & 0.1 & 0.8 & 1.0 & 0.3 & 0.0 & 0.2 & 0.7 & 0.6 \\
+                  Logistic Regression (SMOTE) & 0.4 & 0.4 & 0.4 & 0.1 & 0.8 & 0.1 & 0.5 & 0.3 & 0.2 & 0.0 & 0.2 & 0.5 & 0.4 \\
+                  Voting Classifier (SMOTE)   & 0.4 & 0.4 & 0.4 & 0.1 & 0.7 & 0.1 & 0.6 & 0.4 & 0.2 & 0.0 & 0.2 & 0.5 & 0.5 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+% Table for f1-score
+\begin{table}[hbt!]
+      \centering
+      \caption{F1-scores for each model on all datasets after using SMOTE}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model                       & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM (SMOTE)                 & 0.5 & 0.4 & 0.4 & 0.1 & 0.7 & 0.2 & 0.6 & 0.4 & 0.3 & 0.0 & 0.3 & 0.6 & 0.6 \\
+                  Random Forest (SMOTE)       & 0.2 & 0.4 & 0.5 & 0.1 & 0.8 & 0.1 & 0.7 & 0.6 & 0.3 & 0.0 & 0.3 & 0.7 & 0.6 \\
+                  Logistic Regression (SMOTE) & 0.4 & 0.4 & 0.4 & 0.1 & 0.8 & 0.1 & 0.5 & 0.3 & 0.2 & 0.0 & 0.4 & 0.6 & 0.5 \\
+                  Voting Classifier (SMOTE)   & 0.5 & 0.4 & 0.4 & 0.2 & 0.7 & 0.1 & 0.6 & 0.5 & 0.3 & 0.1 & 0.4 & 0.6 & 0.6 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+\section*{Feature Selection}
 Feature selection is a crucial step in the machine learning pipeline. It is the
 process of selecting the most relevant features from the original dataset to
 use in model training. The aim is to enhance the performance of the machine
