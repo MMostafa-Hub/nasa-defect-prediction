@@ -290,14 +290,96 @@ distributions\cite{van1979information}. \[ F 1 \text { Score }=\frac{2 T P}{(2T 
 %     \caption{kfold}\label{fig:kfold}
 % \end{figure}
 
-% Cross-validation helps in making the model more robust by validating it on
-% different subsets of data and then taking the average of all the performances
-% which helps in improving the model stability. A model's effectiveness is
-% determined by its ability to perform well on unseen data. Cross-validation,
-% such as k-fold cross-validation, helps ensure that the model's performance is
-% not just tied to the way the data was split.\newpage
+\section*{Model performance analysis}
+Four different machine learning models were evaluated in this study, which
+included Support Vector Machine (SVM), Random Forest, Logistic Regression, and
+an Ensemble model. The performance of these models was assessed based on a
+binary classification task.\\
 
-\subsection*{Feature Selection}
+% Accuracy
+\begin{table}[hbt!]
+      \centering
+      \caption{Accuracies for each model on all datasets}
+      \label{tab:model-performance2}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model               & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM                 & 0.9 & 0.8 & 0.8 & 0.8 & 0.7 & 1.0 & 0.7 & 0.8 & 0.9 & 1.0 & 0.9 & 0.9 & 0.8 \\
+                  Random Forest       & 0.8 & 0.8 & 0.7 & 0.9 & 0.8 & 0.9 & 0.8 & 0.8 & 0.9 & 1.0 & 0.9 & 0.9 & 0.8 \\
+                  Logistic Regression & 0.8 & 0.8 & 0.7 & 0.8 & 0.7 & 1.0 & 0.7 & 0.9 & 0.9 & 1.0 & 0.9 & 0.9 & 0.8 \\
+                  Voting Classifier   & 0.9 & 0.8 & 0.7 & 0.8 & 0.7 & 1.0 & 0.7 & 0.9 & 0.9 & 1.0 & 0.9 & 0.9 & 0.8 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+
+% Table for recall
+\begin{table}[hbt!]
+      \centering
+      \caption{Recall for each model on all datasets}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model               & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM                 & 0.0 & 0.0 & 0.1 & 0.1 & 0.6 & 0.0 & 0.6 & 0.1 & 0.2 & 0.0 & 0.0 & 0.4 & 0.2 \\
+                  Random Forest       & 0.0 & 0.2 & 0.3 & 0.0 & 0.9 & 0.0 & 0.4 & 0.0 & 0.1 & 0.0 & 0.1 & 0.4 & 0.4 \\
+                  Logistic Regression & 0.0 & 0.1 & 0.2 & 0.1 & 0.6 & 0.1 & 0.6 & 0.3 & 0.3 & 0.0 & 0.3 & 0.5 & 0.3 \\
+                  Voting Classifier   & 0.0 & 0.1 & 0.2 & 0.1 & 0.6 & 0.0 & 0.6 & 0.1 & 0.2 & 0.0 & 0.0 & 0.4 & 0.3 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+
+% Table for precision
+\begin{table}[hbt!]
+      \centering
+      \caption{Precision for each model on all datasets}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model               & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM                 & 0.0 & 0.7 & 0.8 & 0.2 & 0.7 & 0.0 & 0.6 & 0.5 & 0.7 & 0.0 & 0.0 & 0.9 & 0.9 \\
+                  Random Forest       & 0.0 & 0.5 & 0.6 & 0.0 & 0.8 & 0.0 & 1.0 & 0.0 & 0.5 & 0.0 & 0.3 & 0.9 & 0.6 \\
+                  Logistic Regression & 0.0 & 0.6 & 0.5 & 0.2 & 0.8 & 0.5 & 0.6 & 0.8 & 0.5 & 0.0 & 0.5 & 0.9 & 0.7 \\
+                  Voting Classifier   & 0.0 & 0.6 & 0.6 & 0.3 & 0.7 & 0.0 & 0.7 & 1.0 & 0.7 & 0.0 & 0.5 & 0.9 & 0.8 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+% Table for f1-score
+\begin{table}[hbt!]
+      \centering
+      \caption{F1-scores for each model on all datasets}
+      \label{tab:model-performance}
+      \resizebox{\textwidth}{!}{%
+            \begin{tabular}{lrrrrrrrrrrrrr}
+                  \toprule
+                  Model               & CM1 & JM1 & KC1 & KC3 & KC4 & MC1 & MC2 & MW1 & PC1 & PC2 & PC3 & PC4 & PC5 \\
+                  \midrule
+                  SVM                 & 0.0 & 0.1 & 0.2 & 0.2 & 0.7 & 0.0 & 0.6 & 0.1 & 0.3 & 0.0 & 0.0 & 0.5 & 0.3 \\
+                  Random Forest       & 0.0 & 0.3 & 0.4 & 0.0 & 0.8 & 0.0 & 0.6 & 0.0 & 0.2 & 0.0 & 0.1 & 0.5 & 0.5 \\
+                  Logistic Regression & 0.0 & 0.2 & 0.3 & 0.2 & 0.7 & 0.2 & 0.6 & 0.5 & 0.4 & 0.0 & 0.4 & 0.6 & 0.4 \\
+                  Voting Classifier   & 0.0 & 0.1 & 0.3 & 0.2 & 0.7 & 0.0 & 0.7 & 0.2 & 0.3 & 0.0 & 0.1 & 0.5 & 0.4 \\
+                  \bottomrule
+            \end{tabular}
+      }
+\end{table}
+In conclusion, although high accuracy was demonstrated by all models, But the
+other metrics were low. These results indicated the presence of class imbalance
+in the dataset, a common problem in machine learning tasks. Despite high
+accuracy was demonstrated by all models, difficulties were encountered in
+effectively classifying the minority class (True). Strategies such as
+resampling techniques suggested to address this issue. The model's performance
+should not only be assessed on overall accuracy but also on its ability to
+identify each class accurately, especially when dealing with imbalanced
+datasets.
+
 Feature selection is a crucial step in the machine learning pipeline. It is the
 process of selecting the most relevant features from the original dataset to
 use in model training. The aim is to enhance the performance of the machine
